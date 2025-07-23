@@ -55,6 +55,7 @@ jobs:
             password: ${{ secrets.DOCKER_PASSWORD }}
         
         - name: Build and push Docker image
+          id: docker-build
           uses: docker/build-push-action@v3
           with:
             context: .
@@ -65,4 +66,5 @@ jobs:
             cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/mlops-end-to-end-workflow-part-1:cache,mode=max
         
         - name: Image Digest
-          run: ${{ steps.build-and-publish.outputs.digest }}
+          run: echo "Image digest is ${{ steps.docker-build.outputs.digest }}"
+
